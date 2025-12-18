@@ -29,13 +29,19 @@
       </div>
 
       <div class="messages">
-        <div v-for="(msg, index) in messages" :key="index" class="message">
-          <span v-if="msg.system">🟢 {{ msg.message }}</span>
+        <div
+          v-for="(msg, index) in messages"
+          :key="index"
+          class="message"
+        >
+          <span v-if="msg.system">
+            {{ msg.text }}
+          </span>
 
           <span v-else>
             <span class="avatar">{{ msg.avatar }}</span>
-            <strong>{{ msg.from }}:</strong>
-            {{ msg.message }}
+            <strong>{{ msg.username }}:</strong>
+            {{ msg.text }}
           </span>
         </div>
       </div>
@@ -96,9 +102,7 @@ export default {
     sendMessage() {
       if (!this.newMessage.trim()) return;
 
-      socket.emit('message', {
-        message: this.newMessage,
-      });
+      socket.emit('message', this.newMessage); // ✅ ส่ง string
 
       this.newMessage = '';
     },
